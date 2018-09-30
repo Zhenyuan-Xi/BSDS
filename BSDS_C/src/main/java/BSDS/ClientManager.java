@@ -50,16 +50,14 @@ public class ClientManager {
     int port = Integer.valueOf(args[3]);
     ClientManager clientManager = new ClientManager(maxNumOfThreads, numOfIterPerThread, IP, port);
     long startTime = System.currentTimeMillis();
+    System.out.println("Server starting .....: http://" + IP + ":" + port + "/myapp/myget");
     SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     System.out.println("Client starting .....Time: " + df.format(startTime));
 
     // WARM UP
     int number1 = (int) (clientManager.getMaxNumOfThreads() * 0.1);
     CountDownLatch latch1 = new CountDownLatch(number1);
-    for (int i = 0; i < number1; i++) {
-      Thread thread = new Thread(new ClientThread(IP, port, numOfIterPerThread, latch1));
-      thread.start();
-    }
+    multiThread(number1, IP, port, numOfIterPerThread, latch1);
     long startTime1 = System.currentTimeMillis();
     System.out.println("Warmup phase: All threads running ....");
     latch1.await();
@@ -69,10 +67,7 @@ public class ClientManager {
     // LOADING
     int number2 = (int) (clientManager.getMaxNumOfThreads() * 0.5);
     CountDownLatch latch2 = new CountDownLatch(number2);
-    for (int i = 0; i < number2; i++) {
-      Thread thread = new Thread(new ClientThread(IP, port, numOfIterPerThread, latch2));
-      thread.start();
-    }
+    multiThread(number2, IP, port, numOfIterPerThread, latch2);
     long startTime2 = System.currentTimeMillis();
     System.out.println("Loading phase: All threads running ....");
     latch2.await();
@@ -82,10 +77,7 @@ public class ClientManager {
     // PEAK
     int number3 = clientManager.getMaxNumOfThreads();
     CountDownLatch latch3 = new CountDownLatch(number3);
-    for (int i = 0; i < number3; i++) {
-      Thread thread = new Thread(new ClientThread(IP, port, numOfIterPerThread, latch3));
-      thread.start();
-    }
+    multiThread(number3, IP, port, numOfIterPerThread, latch3);
     long startTime3 = System.currentTimeMillis();
     System.out.println("Peak phase: All threads running ....");
     latch3.await();
@@ -95,10 +87,7 @@ public class ClientManager {
     // COOL DOWN
     int number4 = (int) (clientManager.getMaxNumOfThreads() * 0.25);
     CountDownLatch latch4 = new CountDownLatch(number4);
-    for (int i = 0; i < number4; i++) {
-      Thread thread = new Thread(new ClientThread(IP, port, numOfIterPerThread, latch4));
-      thread.start();
-    }
+    multiThread(number4, IP, port, numOfIterPerThread, latch4);
     long startTime4 = System.currentTimeMillis();
     System.out.println("Cooldown phase: All threads running ....");
     latch4.await();
@@ -116,6 +105,16 @@ public class ClientManager {
     System.out.println("Median latency for all requests: " + getMedian(latencies) + " milliseconds");
     System.out.println("99th percentile latency: " + getPercentile(latencies, 0.99) + " milliseconds");
     System.out.println("95th percentile latency: " + getPercentile(latencies, 0.95) + " milliseconds");
+  }
+
+  private static void multiThread(int number, String IP, int port, int numOfIterPerThread, CountDownLatch latch) {
+    Thread[] threads = new Thread[number];
+    for (int i = 0; i < number; i++) {
+      threads[i] = new Thread(new ClientThread(IP, port, numOfIterPerThread, latch));
+    }
+    for (Thread thread : threads){
+      thread.start();
+    }
   }
 
   private static long getMean(List<Long> latencies) {
