@@ -12,7 +12,7 @@ import javax.ws.rs.core.MediaType;
 import bsds.Data;
 import bsds.DataDao;
 
-@Path("/GET/single/{userId}/{day}")
+@Path("/single/{userId}/{day}")
 class DayGetHandler {
 	
 	@GET
@@ -25,7 +25,7 @@ class DayGetHandler {
 	
 }
 
-@Path("/GET/current/{userId}")
+@Path("/current/{userId}")
 class GetHandler {
 
 	@GET
@@ -37,7 +37,7 @@ class GetHandler {
 	}
 }
 
-@Path("/POST/{userId}/{dayId}/{hourId}/{stepCount}")
+@Path("/{userId}/{dayId}/{hourId}/{stepCount}")
 class PostHandler {
 
   @POST
@@ -55,7 +55,7 @@ class PostHandler {
   }
 }
 
-@Path("/GET/range/{userId}/{startDay}/{numDays}")
+@Path("/range/{userId}/{startDay}/{numDays}")
 class RangeGetHandler {
 
   @GET
