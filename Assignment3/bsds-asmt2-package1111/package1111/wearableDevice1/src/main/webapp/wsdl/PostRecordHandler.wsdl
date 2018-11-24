@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="http://wearableDevice.joyinmyzone.org" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="http://wearableDevice.joyinmyzone.org" xmlns:intf="http://wearableDevice.joyinmyzone.org" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<!--WSDL created by Apache Axis version: 1.4
+Built on Apr 22, 2006 (06:55:48 PDT)-->
+ <wsdl:types>
+  <schema elementFormDefault="qualified" targetNamespace="http://wearableDevice.joyinmyzone.org" xmlns="http://www.w3.org/2001/XMLSchema">
+   <element name="postRecord">
+    <complexType/>
+   </element>
+   <element name="postRecordResponse">
+    <complexType>
+     <sequence>
+      <element name="postRecordReturn" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+  </schema>
+ </wsdl:types>
+
+   <wsdl:message name="postRecordResponse">
+
+      <wsdl:part element="impl:postRecordResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="postRecordRequest">
+
+      <wsdl:part element="impl:postRecord" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:portType name="PostRecordHandler">
+
+      <wsdl:operation name="postRecord">
+
+         <wsdl:input message="impl:postRecordRequest" name="postRecordRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:postRecordResponse" name="postRecordResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <wsdl:binding name="PostRecordHandlerSoapBinding" type="impl:PostRecordHandler">
+
+      <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="postRecord">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="postRecordRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="postRecordResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:binding>
+
+   <wsdl:service name="PostRecordHandlerService">
+
+      <wsdl:port binding="impl:PostRecordHandlerSoapBinding" name="PostRecordHandler">
+
+         <wsdlsoap:address location="http://localhost:8080/wearableDevice/services/PostRecordHandler"/>
+
+      </wsdl:port>
+
+   </wsdl:service>
+
+</wsdl:definitions>

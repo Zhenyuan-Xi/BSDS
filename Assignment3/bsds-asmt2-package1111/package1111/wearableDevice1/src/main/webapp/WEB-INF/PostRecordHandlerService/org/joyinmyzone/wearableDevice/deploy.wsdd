@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?><!-- Use this file to deploy some handlers/chains and services      --><!-- Two ways to do this:                                           --><!--   java org.apache.axis.client.AdminClient deploy.wsdd          --><!--      after the axis server is running                          --><!-- or                                                             --><!--   java org.apache.axis.utils.Admin client|server deploy.wsdd   --><!--      from the same directory that the Axis engine runs         --><deployment xmlns="http://xml.apache.org/axis/wsdd/" xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
+
+  <!-- Services from PostRecordHandlerService WSDL service -->
+
+  <service name="PostRecordHandler" provider="java:RPC" style="wrapped" use="literal">
+      <parameter name="wsdlTargetNamespace" value="http://wearableDevice.joyinmyzone.org"/>
+      <parameter name="wsdlServiceElement" value="PostRecordHandlerService"/>
+      <parameter name="schemaQualified" value="http://wearableDevice.joyinmyzone.org"/>
+      <parameter name="wsdlServicePort" value="PostRecordHandler"/>
+      <parameter name="className" value="org.joyinmyzone.wearableDevice.PostRecordHandler"/>
+      <parameter name="wsdlPortType" value="PostRecordHandler"/>
+      <parameter name="typeMappingVersion" value="1.2"/>
+      <operation xmlns:operNS="http://wearableDevice.joyinmyzone.org" xmlns:retNS="http://wearableDevice.joyinmyzone.org" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="postRecord" qname="operNS:postRecord" returnQName="retNS:postRecordReturn" returnType="rtns:string" soapAction="">
+      </operation>
+      <parameter name="allowedMethods" value="postRecord"/>
+
+  </service>
+</deployment>
